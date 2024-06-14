@@ -28,7 +28,7 @@ export class RoomService {
   }
 
   async create(name: string, createdBy?: string): Promise<Room> {
-    return this.roomRepository.create({ name, createdBy })
+    return this.roomRepository.create({ name, createdBy, userIds: [createdBy] })
   }
 
   async join(id: string, userId: string): Promise<Room> {
@@ -36,12 +36,16 @@ export class RoomService {
     if (room.userIds.includes(userId)) {
       throw new BadRequestException('User has joined room')
     }
-    return await this.roomRepository.update(
+    const roomResult = await this.roomRepository.update(
       { _id: room._id },
       {
         userIds: [...room.userIds, userId],
       },
     )
+    if (!roomResult) {
+      throw new BadRequestException('join failed')
+    }
+    return roomResult
   }
 
   async leave(id: string, userId: string): Promise<void> {

@@ -6,16 +6,22 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es2017",
+    "target": "es2019",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
+    "typeRoots": [
+      "@types",
+      "./node_modules/@types",
+      "./src/@types/"
+    ],
+    "strictNullChecks": true,
     "skipLibCheck": true,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
-  }
+    "pretty": true
+  },
+  "include": [
+    "src/**/*",
+    "test/**/*"
+  ]
 }

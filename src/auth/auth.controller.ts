@@ -1,5 +1,5 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common'
-import { ApiTags } from '@nestjs/swagger'
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 
 import { RequestSession, Session } from '../shared/decorators/request-session.decorator'
 import { AuthGuard } from '../shared/guards/auth.guard'
@@ -12,12 +12,27 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
+  @ApiOperation({
+    summary: 'login',
+  })
+  @ApiResponse({
+    schema: {
+      properties: {
+        access_token: {
+          type: 'string',
+        },
+      },
+    },
+  })
   signIn(@Body() signInDto: Record<string, any>) {
     return this.authService.signIn(signInDto.username, signInDto.password)
   }
 
   @UseGuards(AuthGuard)
   @Get('me')
+  @ApiOperation({
+    summary: 'get user profile',
+  })
   getProfile(@RequestSession() session: Session) {
     return this.authService.me(session?.sub)
   }

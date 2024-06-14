@@ -13,21 +13,25 @@ export function PaginateResultDto<TItem>(ItemClass: ClassType<TItem>): any {
     /**
      * The current page
      */
+    @ApiProperty()
     readonly page?: number
 
     /**
      * The number of items per page
      */
+    @ApiProperty()
     readonly limit?: number
 
     /**
      * Total number of items
      */
+    @ApiProperty()
     readonly total?: number
 
     /**
      * Total number of pages
      */
+    @ApiProperty()
     readonly pages?: number
   }
 

@@ -52,7 +52,7 @@ export class Room {
 }
 
 export const RoomSchema = SchemaFactory.createForClass(Room)
-RoomSchema.index({ name: 1 }, { unique: true })
+RoomSchema.index({ name: 1 })
 RoomSchema.index({ userIds: 1 })
 RoomSchema.index({ createdAt: -1 })
 RoomSchema.index({ deleted: 1 })

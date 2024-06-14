@@ -7,6 +7,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 
 import { AppModule } from './app.module'
 import { RoomService } from './room/room.service'
+import { AllExceptionsFilter } from './shared/filters/all-exceptions.filter'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -25,7 +26,7 @@ async function bootstrap() {
       whitelist: true,
     }),
   )
-  // app.useGlobalFilters(new AllExceptionsFilter(configService, loggerService))
+  app.useGlobalFilters(new AllExceptionsFilter())
 
   app.enableCors({
     origin: '*',

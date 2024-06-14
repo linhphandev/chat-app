@@ -38,7 +38,7 @@ export class MessageService {
     }
 
     const { content } = body
-    return this.messageRepository.create({ createdBy: userId, roomId, content })
+    return await this.messageRepository.create({ createdBy: userId, roomId, content })
   }
 
   async delete(messageId: string, userId: string, deleteMessage: DeleteMessageDto): Promise<void> {

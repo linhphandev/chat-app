@@ -1,13 +1,23 @@
 import { Module } from '@nestjs/common'
+import { ConfigModule } from '@nestjs/config'
+import { JwtModule } from '@nestjs/jwt'
 import { MongooseModule } from '@nestjs/mongoose'
 
 import { AuthModule } from './auth/auth.module'
+import { EventsModule } from './events/events.module'
 import { MessageModule } from './message/message.module'
 import { RoomModule } from './room/room.module'
 
 @Module({
   imports: [
-    // MongooseModule.forRoot('mongodb://127.0.0.1:27017/chat-app'),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWT_SECRET_KEY || '',
+      signOptions: { expiresIn: '1d' },
+    }),
     MongooseModule.forRootAsync({
       imports: [],
       useFactory: async () => ({
@@ -29,6 +39,7 @@ import { RoomModule } from './room/room.module'
     AuthModule,
     RoomModule,
     MessageModule,
+    EventsModule,
   ],
   providers: [],
 })

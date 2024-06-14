@@ -10,17 +10,17 @@ export class MessageRepository {
   constructor(@InjectModel(Message.name) private readonly MessageModel: MongooseModel<MessageDocument>) {}
 
   async findById(id: string): Promise<Message | null> {
-    return this.MessageModel.findOne({ _id: id, deleted: false })
+    return await this.MessageModel.findOne({ _id: id, deleted: false })
   }
 
   async findOneByUser(id: string, userId: string): Promise<Message | null> {
-    return this.MessageModel.findOne({ _id: id, userIds: userId, deleted: false })
+    return await this.MessageModel.findOne({ _id: id, userIds: userId, deleted: false })
   }
 
   async list(condition: Record<string, any>, paging: PagingDto): Promise<PaginatedMessageDto> {
     const { page = 1, limit = 30 } = paging
 
-    return this.MessageModel.paginate(
+    return await this.MessageModel.paginate(
       { ...condition, deleted: false },
       {
         page,
@@ -30,14 +30,13 @@ export class MessageRepository {
     )
   }
 
-  async create(data: Record<string, any>): Promise<Message> {
+  async create(data: any): Promise<Message> {
     const message = new this.MessageModel(data)
     return await message.save()
   }
 
-  async update(condition: Record<string, any>, data: Record<string, any>): Promise<Message> {
-    const messageUpdated = await this.MessageModel.findByIdAndUpdate(condition, data, { new: true })
-    return messageUpdated
+  async update(condition: Record<string, any>, data: Record<string, any>): Promise<Message | null> {
+    return this.MessageModel.findByIdAndUpdate(condition, data, { new: true })
   }
 
   async deleteEveryone(id: string): Promise<boolean> {

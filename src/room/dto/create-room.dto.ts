@@ -1,6 +1,9 @@
+import { ApiProperty } from '@nestjs/swagger'
+
 import { CheckString } from '../../shared/decorators/validation.decorator'
 
 export class CreateRoomDto {
+  @ApiProperty()
   @CheckString({
     minMaxLength: [1, 200],
     minLengthMessage: 'name is too short',

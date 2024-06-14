@@ -1,6 +1,7 @@
 // eslint-disable-next-line max-classes-per-file
 import { ValidationError } from 'class-validator'
 import * as _ from 'lodash'
+import { MongoError } from 'mongodb'
 
 import { HttpStatus } from '@nestjs/common'
 
@@ -160,3 +161,22 @@ export const transformValidationErrors = (errors: ValidationError[]): Exception 
     statusCode: HttpStatus.BAD_REQUEST,
     errors: traverseErrors(errors),
   })
+
+export const getMongoError = (error: MongoError): Exception => {
+  if (error.code === 11000) {
+    return new Exception({
+      statusCode: HttpStatus.CONFLICT,
+      errors: [
+        {
+          code: ErrorCode.DUPLICATE,
+          message: 'duplicate key entry',
+        },
+      ],
+    })
+  }
+
+  return new Exception({
+    statusCode: HttpStatus.BAD_REQUEST,
+    message: error.message,
+  })
+}

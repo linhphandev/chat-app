@@ -10,21 +10,21 @@ export class RoomRepository {
   constructor(@InjectModel(Room.name) private readonly RoomModel: MongooseModel<RoomDocument>) {}
 
   async findOneByName(name: string): Promise<Room | null> {
-    return this.RoomModel.findOne({ name, deleted: false })
+    return await this.RoomModel.findOne({ name, deleted: false })
   }
 
   async findById(id: string): Promise<Room | null> {
-    return this.RoomModel.findOne({ _id: id, deleted: false })
+    return await this.RoomModel.findOne({ _id: id, deleted: false })
   }
 
   async findOneByUser(id: string, userId: string): Promise<Room | null> {
-    return this.RoomModel.findOne({ _id: id, userIds: userId, deleted: false })
+    return await this.RoomModel.findOne({ _id: id, userIds: userId, deleted: false })
   }
 
   async list(condition: Record<string, any>, paging: PagingDto): Promise<PaginatedRoomDto> {
     const { page = 1, limit = 30 } = paging
 
-    return this.RoomModel.paginate(
+    return await this.RoomModel.paginate(
       { ...condition, deleted: false },
       {
         page,
@@ -39,8 +39,7 @@ export class RoomRepository {
     return await room.save()
   }
 
-  async update(condition: Record<string, any>, data: Record<string, any>): Promise<Room> {
-    const roomUpdated = await this.RoomModel.findByIdAndUpdate(condition, data, { new: true })
-    return roomUpdated
+  async update(condition: Record<string, any>, data: Record<string, any>): Promise<Room | null> {
+    return await this.RoomModel.findByIdAndUpdate(condition, data, { new: true })
   }
 }
