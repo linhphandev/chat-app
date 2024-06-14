@@ -41,6 +41,15 @@ $ yarn
 
 ## Running the app
 
+Create `.env` file
+
+```bash
+# Copy from .env.example
+$ cp .env.example .env
+```
+
+Start the app
+
 ```bash
 # development
 $ yarn start
@@ -63,4 +72,18 @@ $ yarn test:e2e
 
 # test coverage
 $ yarn test:cov
+```
+
+## Environments
+
+```bash
+# System
+NODE_ENV=local / development / staging / production
+PORT=3000
+
+# Database
+MONGODB_URI=...
+
+# Secret key to sign a token
+JWT_SECRET_KEY=
 ```

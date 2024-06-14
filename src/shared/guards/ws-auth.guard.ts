@@ -1,6 +1,5 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
-import { WsException } from '@nestjs/websockets'
 
 @Injectable()
 export class WsAuthGuard implements CanActivate {
@@ -11,7 +10,7 @@ export class WsAuthGuard implements CanActivate {
     try {
       const token = this.extractTokenFromHeader(client)
       if (!token) {
-        throw new WsException('Invalid credentials.')
+        throw new Error('Invalid credentials.')
       }
       const payload = await this.jwtService.verifyAsync(token, {
         secret: process.env.JWT_SECRET_KEY || '',
@@ -20,7 +19,7 @@ export class WsAuthGuard implements CanActivate {
       client['session'] = payload
     } catch (ex) {
       console.log(ex)
-      throw new WsException('Invalid credentials.')
+      throw new Error('Invalid credentials.')
     }
     return true
   }

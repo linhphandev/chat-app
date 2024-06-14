@@ -3,8 +3,8 @@ import { BaseWsExceptionFilter } from '@nestjs/websockets'
 
 @Catch()
 export class WsExceptionFilter extends BaseWsExceptionFilter {
-  catch(exception: unknown, host: ArgumentsHost) {
-    console.log(exception)
+  catch(exception: any, host: ArgumentsHost) {
+    console.error(exception)
     super.catch(exception, host)
   }
 }

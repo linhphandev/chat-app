@@ -10,7 +10,6 @@ import {
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-  WsException,
 } from '@nestjs/websockets'
 
 import { CreateMessageDto } from '../message/dto/create-message.dto'
@@ -40,12 +39,12 @@ export class EventsGateway implements OnGatewayInit, OnGatewayConnection, OnGate
   ): Promise<void> {
     if (!roomId) {
       console.log('Room not found')
-      throw new WsException('Room not found')
+      throw new Error('Room not found')
     }
     const session = (<any>client).session as Session
     const message = await this.messageService.create(roomId, session.sub, payload)
     this.server.emit(`recMessage_${roomId}`, message)
-    console.log('message created')
+    console.log(`message created ${message._id}`)
   }
 
   afterInit(server: Server) {
