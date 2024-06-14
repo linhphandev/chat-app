@@ -1,8 +1,8 @@
 import { MongooseModel } from 'mongoose'
-import { PagingDto } from 'src/shared/dto/paging.dto'
 
 import { InjectModel } from '@nestjs/mongoose'
 
+import { PagingDto } from '../shared/dto/paging.dto'
 import { PaginatedMessageDto } from './dto/list-message-res.dto'
 import { Message, MessageDocument } from './schemas/message.schema'
 

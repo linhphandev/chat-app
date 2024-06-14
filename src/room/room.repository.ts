@@ -1,8 +1,8 @@
 import { MongooseModel } from 'mongoose'
-import { PagingDto } from 'src/shared/dto/paging.dto'
 
 import { InjectModel } from '@nestjs/mongoose'
 
+import { PagingDto } from '../shared/dto/paging.dto'
 import { PaginatedRoomDto } from './dto/list-room-res.dto'
 import { Room, RoomDocument } from './schemas/room.schema'
 
