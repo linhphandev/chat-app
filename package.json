@@ -2,34 +2,26 @@
   "name": "chat-app",
   "version": "0.0.1",
   "description": "",
-  "author": "linh.phan",
+  "author": "",
   "private": true,
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=18.12.0"
+  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "format": "prettier --write \"{apps,libs,test}/**/*.ts\"",
-    "start": "nest start api",
-    "start:dev": "nest start api --watch",
-    "start:api": "nest start api",
-    "start:api:dev": "nest start api --watch",
-    "start:api:debug": "nest start api --debug --watch",
-    "start:api:prod": "node dist/apps/api/src/main",
-    "prestart:prod": "typeorm -d ./dist/libs/data-source.js migration:run",
-    "start:prod": "yarn start:api:prod",
-    "start:socket": "nest start socket",
-    "start:socket:dev": "nest start socket --watch",
-    "start:socket:debug": "nest start socket --debug --watch",
-    "start:socket:prod": "node dist/apps/socket/src/main",
-    "lint": "eslint \"{apps,libs,test}/**/*.ts\" --fix",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/main",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "NODE_ENV=test jest --config ./apps/api/test/jest-e2e.json --passWithNoTests --forceExit --runInBand",
-    "prepare": "husky install"
-  },
-  "engines": {
-    "node": ">=18.12.0"
+    "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
     "@nestjs/common": "9.4.1",
@@ -39,14 +31,17 @@
     "@nestjs/microservices": "9.4.1",
     "@nestjs/mongoose": "9.2.2",
     "@nestjs/platform-express": "9.4.1",
+    "@nestjs/platform-socket.io": "^10.3.9",
     "@nestjs/swagger": "6.3.0",
     "@nestjs/terminus": "9.2.2",
+    "@nestjs/websockets": "^10.3.9",
     "class-transformer": "0.4.0",
     "class-validator": "0.14.0",
     "helmet": "5.0.1",
     "ioredis": "4.28.2",
     "lodash": "4.17.21",
     "mongoose": "6.1.5",
+    "mongoose-paginate": "5.0.3",
     "morgan": "1.10.0",
     "nanoid": "3.3.4",
     "reflect-metadata": "0.1.13",
@@ -89,16 +84,12 @@
     "webpack": "5.83.1"
   },
   "jest": {
-    "moduleDirectories": [
-      "node_modules",
-      "<rootDir>"
-    ],
     "moduleFileExtensions": [
       "js",
       "json",
       "ts"
     ],
-    "rootDir": ".",
+    "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
@@ -106,16 +97,7 @@
     "collectCoverageFrom": [
       "**/*.(t|j)s"
     ],
-    "coverageDirectory": "./coverage",
-    "testEnvironment": "node",
-    "roots": [
-      "<rootDir>/apps/",
-      "<rootDir>/libs/"
-    ]
-  },
-  "lint-staged": {
-    "*.{js,ts}": [
-      "eslint --fix"
-    ]
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
   }
 }

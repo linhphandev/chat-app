@@ -1,36 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "compilerOptions": {
-    "plugins": [
-      {
-        "name": "@nestjs/swagger",
-        "options": {
-          "classValidatorShim": true,
-          "introspectComments": true
-        }
-      }
-    ],
-    "webpack": false
-  },
-  "monorepo": true,
-  "projects": {
-    "api": {
-      "type": "application",
-      "root": "apps/api",
-      "entryFile": "main",
-      "sourceRoot": "apps/api/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/api/tsconfig.app.json"
-      }
-    },
-    "socket": {
-      "type": "application",
-      "root": "apps/socket",
-      "entryFile": "main",
-      "sourceRoot": "apps/socket/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/socket/tsconfig.app.json"
-      }
-    }
-  }
+  "sourceRoot": "src"
 }
