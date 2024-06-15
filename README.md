@@ -32,6 +32,7 @@ $ yarn
 
 ## Requirements
 
+- Node version >= 18.12.0
 - MongoDB
 - NestJS cli
 
