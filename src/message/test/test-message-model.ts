@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 
 export const TestMessageData = {
-  id: 'test-message-1',
+  _id: 'test-message-id-1',
   content: 'test-message-name-1',
   roomId: 'test-room-id-1',
   createdBy: 'test-user-id-1',
@@ -19,9 +19,9 @@ export class TestMessageModel {
 
   static paginate() {
     return {
-      docs: [],
+      docs: [new TestMessageModel(TestMessageData)],
       page: 1,
-      total: 10,
+      total: 1,
       limit: 5,
       pages: 2,
     }
@@ -33,12 +33,18 @@ export class TestMessageModel {
 
   static findOne(params: { _id: string }) {
     const { _id } = params
+    if (_id !== TestMessageData._id) {
+      return null
+    }
     return new TestMessageModel(TestMessageData)
   }
 
   static findOneAndUpdate(params: { _id: string }, body: any) {
     const doc = body
     const { _id } = params
+    if (_id !== TestMessageData._id) {
+      return null
+    }
     if (doc.$set) {
       const keys = Object.keys(doc.$set)
       for (let i = 0; i < keys.length; i += 1) {
@@ -57,5 +63,9 @@ export class TestMessageModel {
       delete doc.$push
     }
     return _.defaultsDeep(doc, TestMessageData)
+  }
+
+  static updateOne(params: { _id: string }, body: any) {
+    return this.findOneAndUpdate(params, body)
   }
 }

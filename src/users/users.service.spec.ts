@@ -1,3 +1,4 @@
+import { JwtService } from '@nestjs/jwt'
 import { Test, TestingModule } from '@nestjs/testing'
 
 import { getTestingGlobalModule } from '../shared/test/util'
@@ -21,7 +22,7 @@ describe('UsersService', () => {
 
   describe('findOneById', () => {
     it('should return "john"', async () => {
-      const user = await service.findOneById('test-user-id-1')
+      const user = await service.findOneById('test-user-id-john')
       expect(user).toBeDefined()
       expect(user?.username).toBe('john')
     })

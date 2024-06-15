@@ -36,8 +36,11 @@ describe('AuthService', () => {
       const result = await service.signIn('john', 'john123')
       expect(result).toHaveProperty('access_token')
     })
-    it('should login failed', async () => {
+    it('should login failed with wrong password', async () => {
       await expect(service.signIn('john', 'test')).rejects.toThrow(UnauthorizedException)
+    })
+    it('should login failed with user is null', async () => {
+      await expect(service.signIn('john1', 'test')).rejects.toThrow(UnauthorizedException)
     })
   })
 
